@@ -1,19 +1,67 @@
 [
     {
       "id": 1,
-      "title": "Cotton T-Shirt",
+      "title": "Everyday Cotton T-Shirt",
       "price": 19.99,
-      "description": "Soft cotton t-shirt in a relaxed fit.",
+      "description": "Soft cotton t-shirt with a relaxed fit for everyday wear.",
       "category": "men's clothing",
-      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+      "image": "https://via.placeholder.com/400x400.png?text=T-Shirt"
     },
     {
       "id": 2,
+      "title": "Classic Hoodie",
+      "price": 29.99,
+      "description": "Comfortable hoodie with a simple design and front pocket.",
+      "category": "men's clothing",
+      "image": "https://via.placeholder.com/400x400.png?text=Hoodie"
+    },
+    {
+      "id": 3,
+      "title": "Casual Sneakers",
+      "price": 49.99,
+      "description": "Lightweight sneakers for casual daily use.",
+      "category": "shoes",
+      "image": "https://via.placeholder.com/400x400.png?text=Sneakers"
+    },
+    {
+      "id": 4,
       "title": "Everyday Backpack",
       "price": 39.99,
-      "description": "Lightweight backpack for daily use.",
+      "description": "Simple backpack with enough space for daily essentials.",
       "category": "bags",
-      "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+      "image": "https://via.placeholder.com/400x400.png?text=Backpack"
+    },
+    {
+      "id": 5,
+      "title": "Cotton Tote Bag",
+      "price": 14.99,
+      "description": "Reusable cotton tote bag for light shopping and errands.",
+      "category": "bags",
+      "image": "https://via.placeholder.com/400x400.png?text=Tote+Bag"
+    },
+    {
+      "id": 6,
+      "title": "Basic Wristwatch",
+      "price": 24.99,
+      "description": "Minimal wristwatch with a clean, readable dial.",
+      "category": "accessories",
+      "image": "https://via.placeholder.com/400x400.png?text=Watch"
+    },
+    {
+      "id": 7,
+      "title": "Wireless Headphones",
+      "price": 59.99,
+      "description": "Simple wireless headphones for music and calls.",
+      "category": "electronics",
+      "image": "https://via.placeholder.com/400x400.png?text=Headphones"
+    },
+    {
+      "id": 8,
+      "title": "Desk Lamp",
+      "price": 22.99,
+      "description": "Compact desk lamp for reading or work.",
+      "category": "home",
+      "image": "https://via.placeholder.com/400x400.png?text=Desk+Lamp"
     }
   ]
   
