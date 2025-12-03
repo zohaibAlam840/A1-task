@@ -15,7 +15,6 @@ export default function SiteHeader() {
   const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Lock scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -23,7 +22,6 @@ export default function SiteHeader() {
     };
   }, [menuOpen]);
 
-  
   useEffect(() => {
     function onKey(e) {
       if (e.key === "Escape") setMenuOpen(false);
@@ -41,6 +39,7 @@ export default function SiteHeader() {
       }}
     >
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
+        
         <Link href="/" className="flex items-center gap-2">
           <motion.div
             className="flex h-9 w-9 items-center justify-center rounded-2xl text-lg font-semibold"
@@ -66,14 +65,19 @@ export default function SiteHeader() {
           </motion.span>
         </Link>
 
-        
+        {/* Desktop nav */}
         <div className="hidden sm:flex items-center gap-6 text-xs md:text-sm">
+
           <div className="flex gap-4" style={{ color: "var(--fs-text-muted)" }}>
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="hover:text-[var(--fs-primary)] transition-colors"
+                className="transition px-3 py-1 rounded-md hover:bg-[var(--fs-primary)] hover:text-white"
+                style={{
+                  backgroundColor: "var(--fs-primary-soft)",
+                  border: "1px solid var(--fs-border)",
+                }}
               >
                 {link.label}
               </Link>
@@ -95,7 +99,6 @@ export default function SiteHeader() {
               color: "var(--fs-primary)",
               backgroundColor: "#ffffff",
             }}
-            aria-label={`Open cart (${totalItems} items)`}
           >
             <span className="text-sm">🧾</span>
             <span className="hidden sm:inline">Cart</span>
@@ -106,7 +109,6 @@ export default function SiteHeader() {
                   backgroundColor: "var(--fs-primary)",
                   color: "white",
                 }}
-                aria-hidden
               >
                 {totalItems}
               </span>
@@ -114,7 +116,7 @@ export default function SiteHeader() {
           </Link>
         </div>
 
-        
+        {/* Mobile controls */}
         <div className="flex items-center gap-3 sm:hidden">
           <Link
             href="/cart"
@@ -124,10 +126,8 @@ export default function SiteHeader() {
               color: "var(--fs-primary)",
               backgroundColor: "#ffffff",
             }}
-            aria-label={`Open cart (${totalItems} items)`}
           >
-            <span className="sr-only">Cart</span>
-            <span aria-hidden>🧾</span>
+            🧾
             {totalItems > 0 && (
               <span
                 className="absolute -top-1 -right-1 inline-flex items-center justify-center rounded-full px-2 py-0.5 text-[0.6rem] font-bold"
@@ -135,41 +135,26 @@ export default function SiteHeader() {
                   backgroundColor: "var(--fs-primary)",
                   color: "white",
                 }}
-                aria-hidden
               >
                 {totalItems}
               </span>
             )}
           </Link>
 
-          {/* Hamburger */}
           <button
             onClick={() => setMenuOpen(true)}
-            aria-label="Open menu"
-            aria-haspopup="true"
-            aria-expanded={menuOpen}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border transition"
-            style={{
-              borderColor: "var(--fs-border)",
-              backgroundColor: "transparent",
-            }}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border"
+            style={{ borderColor: "var(--fs-border)" }}
           >
-            <motion.span
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-lg font-medium"
-            >
-              ☰
-            </motion.span>
+            ☰
           </button>
         </div>
       </nav>
 
-      {/* Mobile slide-over menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* overlay */}
             <motion.div
               className="fixed inset-0 z-40"
               initial={{ opacity: 0 }}
@@ -177,7 +162,6 @@ export default function SiteHeader() {
               exit={{ opacity: 0 }}
               style={{ backgroundColor: "black" }}
               onClick={() => setMenuOpen(false)}
-              aria-hidden
             />
 
             <motion.aside
@@ -185,9 +169,6 @@ export default function SiteHeader() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              role="dialog"
-              aria-modal="true"
             >
               <div className="flex items-center justify-between px-4 py-3">
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
@@ -208,7 +189,6 @@ export default function SiteHeader() {
 
                 <button
                   onClick={() => setMenuOpen(false)}
-                  aria-label="Close menu"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border"
                   style={{ borderColor: "var(--fs-border)" }}
                 >
@@ -222,47 +202,18 @@ export default function SiteHeader() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="block rounded-md px-3 py-3 text-sm font-medium hover:bg-gray-50"
-                    style={{ color: "var(--fs-primary-dark)" }}
+                    className="block rounded-md px-3 py-3 text-sm font-medium"
+                    style={{
+                      color: "var(--fs-primary-dark)",
+                      backgroundColor: "var(--fs-primary-soft)",
+                      border: "1px solid var(--fs-border)",
+                      marginBottom: "6px",
+                    }}
                   >
                     {link.label}
                   </Link>
                 ))}
               </nav>
-
-              <div className="mt-6 px-4">
-                <Link
-                  href="/cart"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between rounded-lg border px-4 py-3 text-sm font-semibold"
-                  style={{ border: "1px solid var(--fs-primary)" }}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>🧾</span>
-                    <span>Cart</span>
-                  </div>
-                  <div>
-                    {totalItems > 0 ? (
-                      <span
-                        className="inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold"
-                        style={{ backgroundColor: "var(--fs-primary)", color: "white" }}
-                      >
-                        {totalItems}
-                      </span>
-                    ) : (
-                      <span className="text-[0.8rem]" style={{ color: "var(--fs-text-muted)" }}>
-                        empty
-                      </span>
-                    )}
-                  </div>
-                </Link>
-              </div>
-
-              <div className="mt-auto px-4 py-6">
-                <p className="text-xs" style={{ color: "var(--fs-text-muted)" }}>
-                  Demo shop
-                </p>
-              </div>
             </motion.aside>
           </>
         )}
