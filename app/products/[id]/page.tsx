@@ -5,22 +5,51 @@ import { notFound } from "next/navigation";
 
 export const revalidate = 60;
 
+// Safe: don't break build if Fake Store API is down
 export async function generateStaticParams() {
-  const products = await fetchProducts();
+  try {
+    const products = await fetchProducts();
 
-  return products.map((product: any) => ({
-    id: product.id.toString(),
-  }));
+    if (!Array.isArray(products)) {
+      return [];
+    }
+
+    return products.map((product: any) => ({
+      id: product.id?.toString(),
+    })).filter((p: { id: string | undefined }) => !!p.id);
+  } catch (err) {
+    console.error("Failed to generate static params for products", err);
+    // Return empty so build still succeeds
+    return [];
+  }
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+// Safe: fall back to generic metadata if product lookup fails
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  const product = await fetchProductById(id);
 
-  return {
-    title: product.title,
-    description: product.description,
-  };
+  try {
+    const product = await fetchProductById(id);
+
+    if (!product || !product.title) {
+      throw new Error("No product data for metadata");
+    }
+
+    return {
+      title: product.title,
+      description: product.description ?? "Product details",
+    };
+  } catch (err) {
+    console.error("Failed to fetch product for metadata", err);
+    return {
+      title: "Product",
+      description: "Product details for this item.",
+    };
+  }
 }
 
 export default async function ProductPage({
@@ -30,12 +59,12 @@ export default async function ProductPage({
 }) {
   const { id } = await params;
 
-  let product;
+  let product: any;
 
   try {
     product = await fetchProductById(id);
   } catch (err) {
-    console.error(err);
+    console.error("Failed to fetch product on ProductPage", err);
     return notFound();
   }
 
