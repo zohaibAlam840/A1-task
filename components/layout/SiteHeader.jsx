@@ -1,8 +1,8 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
 import { useCart } from "@/components/cart/CartProvider";
 
 const NAV_LINKS = [
@@ -15,6 +15,7 @@ export default function SiteHeader() {
   const { totalItems } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Lock scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -22,9 +23,9 @@ export default function SiteHeader() {
     };
   }, [menuOpen]);
 
-
+  
   useEffect(() => {
-    function onKey(e: KeyboardEvent) {
+    function onKey(e) {
       if (e.key === "Escape") setMenuOpen(false);
     }
     if (menuOpen) window.addEventListener("keydown", onKey);
@@ -65,7 +66,7 @@ export default function SiteHeader() {
           </motion.span>
         </Link>
 
-        {/* Desktop nav (sm+) */}
+        
         <div className="hidden sm:flex items-center gap-6 text-xs md:text-sm">
           <div className="flex gap-4" style={{ color: "var(--fs-text-muted)" }}>
             {NAV_LINKS.map((link) => (
@@ -113,7 +114,7 @@ export default function SiteHeader() {
           </Link>
         </div>
 
-        {/* Mobile controls */}
+        
         <div className="flex items-center gap-3 sm:hidden">
           <Link
             href="/cart"
@@ -153,7 +154,6 @@ export default function SiteHeader() {
               backgroundColor: "transparent",
             }}
           >
-            {/* simple animated hamburger */}
             <motion.span
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -269,4 +269,4 @@ export default function SiteHeader() {
       </AnimatePresence>
     </header>
   );
-                  }
+}
