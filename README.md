@@ -1,81 +1,63 @@
-Here’s a `README.md` you can drop straight into your project 👇
+NextStore 🛍
 
-````md
-# NextStore 🛍
-
-NextStore is a small demo online shop built with the Next.js App Router and the Fake Store API.  
+NextStore is a small demo online shop built with the Next.js App Router and the Fake Store API.
 It shows a simple product listing, product detail pages, a cart, and a demo checkout flow with clean, soft styling inspired by fakestoreapi.com.
 
-> **Note:** This project is for learning/demo only. No real orders or payments are processed.
+Note: This project is for learning/demo only. No real orders or payments are processed.
 
----
+🧰 Tech Stack
 
-## 🧰 Tech Stack
+Next.js (App Router, server components, SSG/ISR)
 
-- **Next.js** (App Router, server components, SSG/ISR)
-- **React** & **TypeScript/JavaScript**
-- **Tailwind CSS**
-- **Framer Motion** (micro-animations)
-- **Fake Store API** for product data  
-  https://fakestoreapi.com
+React
 
----
+Tailwind CSS
 
-## 🚀 Getting Started
+Framer Motion (micro-animations)
 
-### 1. Prerequisites
+Fake Store API for product data
+https://fakestoreapi.com
 
-- **Node.js** 18+ (recommended)
-- **npm** (comes with Node)
+🚀 Getting Started
+1. Prerequisites
+
+Node.js 18+
+
+npm (comes with Node)
 
 Check versions:
 
-```bash
 node -v
 npm -v
-````
 
-### 2. Install dependencies
+2. Install dependencies
 
 From the project root:
 
-```bash
 npm install
-```
 
-This will install Next.js, React, Tailwind, Framer Motion, etc.
-
-### 3. Run the development server
-
-```bash
+3. Run the development server
 npm run dev
-```
+
 
 Then open:
 
-```text
 http://localhost:3000
-```
+
 
 The site will automatically reload when you edit files.
 
-### 4. Production build (optional)
-
-```bash
+4. Production build (optional)
 npm run build
 npm start
-```
 
----
+📁 Project Structure
 
-## 📁 Project Structure
+Key folders and files (your structure may have .js/.jsx or .ts/.tsx):
 
-Key folders and files:
-
-```text
 .
 ├── app/
-│   ├── page.tsx              # Home page (Hero + intro)
+│   ├── page.tsx              # Home page (/)
 │   ├── products/
 │   │   ├── page.tsx          # Products listing page (/products)
 │   │   └── [id]/
@@ -86,8 +68,8 @@ Key folders and files:
 │   │   └── page.tsx          # Checkout page (/checkout)
 │   ├── about/
 │   │   └── page.tsx          # About page (/about)
-│   ├── loading.tsx?          # Optional loading UI for root (if added)
-│   └── globals.css           # Global styles + theme variables
+│   ├── globals.css           # Global styles + theme variables
+│   └── layout.tsx            # Root layout (header, footer, providers)
 │
 ├── components/
 │   ├── layout/
@@ -111,22 +93,17 @@ Key folders and files:
 ├── next.config.js            # Next.js config
 ├── tailwind.config.ts        # Tailwind configuration
 └── README.md
-```
 
-*(Some file extensions may be `.js`/`.jsx` or `.ts`/`.tsx` depending on your setup.)*
+🌐 Data & API
 
----
+All product data comes from Fake Store API:
 
-## 🌐 Data & API
+Base URL: https://fakestoreapi.com
 
-All product data comes from **Fake Store API**:
-
-* Base URL: `https://fakestoreapi.com`
-* Helper functions live in: `lib/api/products.ts` (or `.js`)
+Helper functions live in: lib/api/products.ts (or .js)
 
 Example:
 
-```ts
 const BASE_URL = "https://fakestoreapi.com";
 
 export async function fetchProducts() {
@@ -152,17 +129,14 @@ export async function fetchProductById(id: string | number) {
 
   return res.json();
 }
-```
 
-No API keys or `.env` files are required.
 
----
+No API keys or .env files are required.
 
-## 🎨 Styling & Theme
+🎨 Styling & Theme
 
-Global styles and color theme are defined in `app/globals.css` using CSS variables:
+Global styles and color theme are defined in app/globals.css using CSS variables:
 
-```css
 :root {
   --fs-primary: #7a1f6b;
   --fs-primary-soft: #f6e7f5;
@@ -175,120 +149,131 @@ Global styles and color theme are defined in `app/globals.css` using CSS variabl
   --fs-text-muted: #6d6476;
   --fs-accent: #16a34a;
 }
-```
+
 
 Pages and components use these variables inline, for example:
 
-```tsx
 style={{ backgroundColor: "var(--fs-bg)", color: "var(--fs-text)" }}
-```
+
 
 Tailwind is used for layout, spacing, typography, and responsiveness.
 
----
+🛒 Cart Behavior
 
-## 🛒 Cart Behavior
+The cart is implemented with React context and stored in sessionStorage, so it persists while the browser tab is open.
 
-The cart is implemented with React context and stored in **`sessionStorage`**, so it persists while the browser tab is open.
+Cart logic: components/cart/CartProvider.tsx
+Access via the useCart() hook:
 
-* Cart logic: `components/cart/CartProvider.tsx`
-* Access via `useCart()` hook:
+items
 
-  * `items`, `totalItems`, `totalPrice`
-  * `addItem(product, quantity)`
-  * `updateQuantity(id, quantity)`
-  * `removeItem(id)`
-  * `clearCart()`
+totalItems
 
-`CartProvider` is added around the app in `app/layout.tsx`, so header, product pages, cart, and checkout all share the same cart state.
+totalPrice
 
-### Where cart is used:
+addItem(product, quantity?)
 
-* **Header (`SiteHeader`)**
+updateQuantity(id, quantity)
 
-  * Shows `Cart (X)` with the current item count.
-  * Links to `/cart`.
+removeItem(id)
 
-* **Product detail (`ProductDetailClient`)**
+clearCart()
 
-  * “Add to cart” / “Add more to cart” button.
-  * Shows a small animated “Added to your cart” pill when clicked.
+CartProvider wraps the app in app/layout.tsx, so header, product pages, cart, and checkout all share the same cart state.
 
-* **Product cards (`ProductCard`)**
+Where cart is used
 
-  * Quick “Add” button on each card.
-  * Gives instant feedback (button flips to “Added” briefly).
+Header (SiteHeader)
 
-* **Cart page (`app/cart/page.tsx`)**
+Shows Cart (X) with the current item count.
 
-  * Lists all items in the cart.
-  * Quantity controls (+/−), line totals, remove button.
-  * Order summary with total.
+Links to /cart.
 
-* **Checkout page (`app/checkout/page.tsx`)**
+Product detail (ProductDetailClient)
 
-  * Simple demo form (name, email, address…).
-  * Reads items and totals from the cart.
-  * On submit: shows “Order placed (demo)” and clears the cart.
+“Add to cart” / “Add more to cart” button.
 
----
+Small animated notice (“Added to your cart”) when an item is added.
 
-## 📍 Main Pages
+Product cards (ProductCard)
 
-* `/` – Home (Hero + intro)
-* `/products` – All products
-* `/products/[id]` – Product detail
-* `/cart` – Cart
-* `/checkout` – Checkout (demo)
-* `/about` – About the project
+Quick “Add” button on each card.
 
-All of these live under the `app/` directory as App Router routes.
+Button briefly changes to “Added” when clicked.
 
----
+Cart page (app/cart/page.tsx)
 
-## 🧪 Useful Scripts
+Lists all items in the cart.
 
-In `package.json`:
+Quantity controls (+/−), line totals, and remove button.
 
-```bash
+Order summary with total.
+
+Checkout page (app/checkout/page.tsx)
+
+Simple demo form (name, email, address, etc.).
+
+Reads items and totals from the cart.
+
+On submit: shows a “Order placed (demo)” message and clears the cart.
+
+📍 Main Pages
+
+/ – Home (Hero + intro)
+
+/products – All products
+
+/products/[id] – Product detail
+
+/cart – Cart
+
+/checkout – Checkout (demo)
+
+/about – About the project
+
+All routes are defined under the app/ directory using the App Router.
+
+🧪 Useful Scripts
+
+In package.json:
+
 npm run dev      # Start development server
 npm run build    # Build for production
 npm start        # Start production server after build
 npm run lint     # Run linting (if configured)
-```
 
----
+📝 Notes
 
-## 📝 Notes
+This project is a learning/assignment demo, not a real store.
 
-* This project is a **learning/assignment demo**, not a real store.
-* All data is from a public API and may change.
-* No payments or real transactions happen here.
-* Feel free to customize:
+All data is from a public API and may change.
 
-  * theme colors in `globals.css`
-  * text/content on the Hero, About, and Checkout pages
-  * card and layout styles in `components/`
+No payments or real transactions happen here.
 
----
+You can customize:
 
-## 🔍 Where to look if something breaks
+theme colors in app/globals.css
 
-* **Data issues**
+text/content on the Home, About, Cart, and Checkout pages
 
-  * Check `lib/api/products.ts`
-  * Confirm `https://fakestoreapi.com` is reachable
+card and layout styles in components/
 
-* **Cart issues**
+🔍 Debugging Tips
 
-  * Check `components/cart/CartProvider.tsx`
-  * Make sure `<CartProvider>` wraps the app in `app/layout.tsx`
+Data issues
 
-* **Styles off**
+Check lib/api/products.ts
 
-  * Check `app/globals.css` for the theme variables
-  * Check Tailwind classes on components
+Confirm https://fakestoreapi.com is reachable
 
+Cart issues
 
-::contentReference[oaicite:0]{index=0}
-```
+Check components/cart/CartProvider.tsx
+
+Make sure <CartProvider> wraps the app in app/layout.tsx
+
+Styles off
+
+Check app/globals.css for theme variables
+
+Check Tailwind classes on components
