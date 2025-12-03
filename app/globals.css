@@ -3,6 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+   /* Brand */
+   --fs-primary: #7a1f6b;      /* main purple */
+   --fs-primary-soft: #f6e7f5; /* light purple background */
+   --fs-primary-dark: #4f1446; /* darker hover / headings */
+ 
+   /* Neutrals */
+   --fs-bg: #fffafd;           /* page background */
+   --fs-surface: #ffffff;      /* cards, sections */
+   --fs-border: #e3d5ea;       /* subtle borders */
+   --fs-text: #3a3440;         /* main text */
+   --fs-text-muted: #6d6476;   /* secondary text */
+ 
+   /* Accent (for success ticks, small details if you want) */
+   --fs-accent: #16a34a;
 }
 
 @theme inline {
@@ -23,4 +37,48 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* in globals.css */
+
+.fs-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2.5rem;
+  border-radius: 9999px;
+  font-size: var(--fs-button);
+  font-weight: 600;
+  background-color: var(--fs-primary);
+  color: #ffffff;
+  border: 1px solid var(--fs-primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-shadow: 0 10px 20px rgba(122, 31, 107, 0.18);
+}
+
+.fs-btn-primary:hover {
+  background-color: var(--fs-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(79, 20, 70, 0.25);
+}
+
+.fs-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2.5rem;
+  border-radius: 9999px;
+  font-size: var(--fs-button);
+  font-weight: 600;
+  background-color: transparent;
+  color: var(--fs-primary);
+  border: 1px solid var(--fs-primary);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.fs-btn-outline:hover {
+  background-color: var(--fs-primary-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 25px rgba(122, 31, 107, 0.18);
 }
